@@ -15,6 +15,15 @@ async def calcular_valor_financiado(FinanciamentoInput: FinanciamentoInput):
         return HTTPException(status_code=200, detail=valor_financiado)
     except:
          raise HTTPException(status_code=404, detail="Erro ao calcular valor do financimento")
+    
+@app.post("/Veiculo/calcular_Amortizacao/")
+async def calcular_Amortizacao(FinanciamentoInput: FinanciamentoInput):
+    try:
+        veiculo = Veiculo(**FinanciamentoInput.dict())
+        valor_financiado = veiculo.calcular_amortizacao(12)
+        return HTTPException(status_code=200, detail=valor_financiado)
+    except:
+         raise HTTPException(status_code=404, detail="Erro ao calcular valor do financimento")
 
 # Rota para calcular o valor financiado do Imovel
 @app.post("/Imovel/calcular_valor_financiado/")

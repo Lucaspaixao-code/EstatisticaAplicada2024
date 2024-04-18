@@ -21,3 +21,24 @@ class Veiculo:
         # Calculando o valor da parcela
         valor_parcela = (valor_presente * taxa_periodica) / (1 - (1 + taxa_periodica) ** -self.qtde_parcela)
         return valor_parcela
+    
+    def calcular_amortizacao(self, numero_parcela):
+        # Calculando a taxa de juros periódica
+        taxa_periodica = self.taxa_juros / 100 / 12  # Convertendo a taxa de juros anual para mensal
+        
+        # Calculando o valor presente
+        valor_presente = self.calcular_valor_financiado()
+        
+        # Calculando o valor da parcela
+        valor_parcela = self.calcular_valor_parcela()
+
+        amortizacao = 0
+        
+        # Calculando a amortização
+        saldo_devedor = valor_presente
+        for _ in range(numero_parcela):
+            juros = saldo_devedor * taxa_periodica
+            amortizacao += valor_parcela - juros
+            saldo_devedor -= amortizacao
+        
+        return amortizacao
